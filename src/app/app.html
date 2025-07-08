@@ -1,5 +1,11 @@
-<mat-slide-toggle>Toggle me!</mat-slide-toggle>
-<mat-form-field class="example-full-width">
-  <mat-label>Favorite food</mat-label>
-  <input matInput placeholder="Ex. Pizza" value="Sushi">
-</mat-form-field>
+<main class="container">
+  <h1>Список задач</h1>
+  <button matButton="filled" (click)="openDialog()">Добавить задачу</button>
+  <mat-card class="example-card " appearance="outlined">
+    <mat-card-title>Задача</mat-card-title>
+    <mat-card-actions>
+      <button matButton="outlined" (click)="addTask()">Подробнее</button>
+      <button matButton="outlined" (click)="delete()">Удалить</button>
+    </mat-card-actions>
+  </mat-card>
+</main>
