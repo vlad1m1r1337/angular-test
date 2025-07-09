@@ -1,0 +1,26 @@
+<main class="container"  role="main">
+  <h1>Список задач</h1>
+  <button matButton="filled" (click)="openDialog()">Добавить задачу</button>
+  <ul>
+    <li *ngFor="let task of tasks$ | async">
+      <section>
+        <mat-card class="mat-card" appearance="outlined">
+          <mat-card-title>{{ task.title }}</mat-card-title>
+          <dl>
+            <dt>Описание</dt>
+            <dd>{{ task.description }}</dd>
+          </dl>
+          <dl>
+            <dt>Статус</dt>
+            <dd *ngIf="task.completed">Выполнена</dd>
+            <dd *ngIf="!task.completed">Не выполнена</dd>
+          </dl>
+          <mat-card-actions>
+            <a matButton="outlined" [routerLink]="['/tasks', task.id]">Подробнее</a>
+            <button matButton="outlined" (click)="tasks.deleteTask(task.id)">Удалить</button>
+          </mat-card-actions>
+        </mat-card>
+      </section>
+    </li>
+  </ul>
+</main>

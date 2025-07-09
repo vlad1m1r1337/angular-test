@@ -1,0 +1,18 @@
+<form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)">
+  <mat-dialog-content class="container">
+    <mat-form-field appearance="fill">
+      <mat-label>Задача</mat-label>
+      <input matInput name="title" [(ngModel)]="task.title" required />
+      <mat-error *ngIf="taskForm.submitted && taskForm.controls['title']?.invalid">
+        Поле обязательно
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Описание</mat-label>
+      <input matInput name="description" [(ngModel)]="task.description" />
+    </mat-form-field>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-raised-button color="primary" type="submit">Добавить задачу</button>
+  </mat-dialog-actions>
+</form>

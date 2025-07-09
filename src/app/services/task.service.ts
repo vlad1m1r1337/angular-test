@@ -1,78 +1,44 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import {Task} from '../models/task.model';
+import { map } from 'rxjs/operators';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({ providedIn: 'root' })
 export class TaskService {
-  private db!: IDBDatabase;
-  private tasks$ = new BehaviorSubject<Task[]>([]);
-
-  constructor() {
-    this.initDB();
-  }
-
-  getTasks$() {
-    return this.tasks$.asObservable();
-  }
-
-  public initDB() {
-    const request = indexedDB.open('TodoDB', 1);
-
-    request.onupgradeneeded = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains('tasks')) {
-        db.createObjectStore('tasks', { keyPath: 'id', autoIncrement: true });
-      }
-    };
-
-    request.onsuccess = () => {
-      this.db = request.result;
-      this.loadTasks();
-    };
-
-    request.onerror = () => {
-      console.error('IndexedDB init error:', request.error);
-    };
-  }
-
-  private loadTasks() {
-    const tx = this.db.transaction('tasks', 'readonly');
-    const store = tx.objectStore('tasks');
-    const request = store.getAll();
-
-    request.onsuccess = () => {
-      this.tasks$.next(request.result);
-    };
-
-    request.onerror = () => {
-      console.error('Failed to load tasks:', request.error);
-    };
-  }
+  private tasksSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.tasksSubject.asObservable();
 
   addTask(task: Task) {
-    const tx = this.db.transaction('tasks', 'readwrite');
-    const store = tx.objectStore('tasks');
-    const request = store.add(task);
-
-    request.onsuccess = () => this.loadTasks();
-    request.onerror = () => console.error('Add error:', request.error);
+    const current = this.tasksSubject.value;
+    this.tasksSubject.next([...current, { ...task, id: this.generateId() }]);
   }
 
-  updateTask(task: Task) {
-    const tx = this.db.transaction('tasks', 'readwrite');
-    const store = tx.objectStore('tasks');
-    const request = store.put(task);
-
-    request.onsuccess = () => this.loadTasks();
-    request.onerror = () => console.error('Update error:', request.error);
+  deleteTask(id: string | undefined) {
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.filter(task => task.id !== id);
+    this.tasksSubject.next(updatedTasks);
   }
 
-  deleteTask(id: number) {
-    const tx = this.db.transaction('tasks', 'readwrite');
-    const store = tx.objectStore('tasks');
-    const request = store.delete(id);
+  changeTaskStatus(id: string | undefined) {
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.map(task =>
+      task.id === id ? { ...task, completed: !task.completed } : task
+    );
+    this.tasksSubject.next(updatedTasks);
+  }
 
-    request.onsuccess = () => this.loadTasks();
-    request.onerror = () => console.error('Delete error:', request.error);
+  private generateId(): string {
+    return uuidv4();
+  }
+
+  getTasks$(): Observable<Task[]> {
+    return this.tasks$;
+  }
+
+  getTask$(id: string | null): Observable<Task | undefined> {
+    return this.tasks$.pipe(
+      map(tasks => tasks.find(task => task.id === id))
+    );
   }
 }

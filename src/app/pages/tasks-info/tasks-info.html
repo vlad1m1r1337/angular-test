@@ -1,1 +1,18 @@
-<p>tasks-info works!</p>
+<div class="container">
+  <a matButton="outlined" [routerLink]="['/tasks']" class="button_back">Назад</a>
+  <section>
+    <mat-card class="mat-card" appearance="outlined">
+      <mat-card-title>{{ (task$ | async)?.title }}</mat-card-title>
+      <dl>
+        <dt>Описание</dt>
+        <dd>{{ (task$ | async)?.description }}</dd>
+      </dl>
+      <p>
+        <mat-slide-toggle
+          [checked]="(task$ | async)?.completed"
+          (change)="changeTaskStatus($event.checked)">{{ (task$ | async)?.completed ? 'Выполнена' : 'Не выполнена'}}
+        </mat-slide-toggle>
+      </p>
+    </mat-card>
+  </section>
+</div>
