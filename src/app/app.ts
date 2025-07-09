@@ -15,11 +15,11 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {TaskService} from './services/task.service';
-import {Task} from './models/task.model';
-import {Dialog} from './components/dialog/dialog';
+import {TaskService} from './shared/services/task.service';
+import {Task} from './shared/services/task.model';
+import {Dialog} from './dialog/dialog';
 import {CommonModule} from '@angular/common';
-import {Tasks} from './pages/tasks/tasks';
+import {Tasks} from './tasks/tasks';
 
 @Component({
   selector: 'app-root',

@@ -5,7 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 import {MatButton} from '@angular/material/button';
 import {FormsModule, NgForm} from '@angular/forms';
-import {TaskService} from '../../services/task.service';
+import {TaskService} from '../shared/services/task.service';
 
 @Component({
   selector: 'dialog-component',

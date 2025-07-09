@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {ActivatedRoute, RouterLink} from '@angular/router';
-import {TaskService} from '../../services/task.service';
+import {TaskService} from '../shared/services/task.service';
 import {MatCard, MatCardTitle} from '@angular/material/card';
 import {AsyncPipe, CommonModule} from '@angular/common';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -25,18 +25,13 @@ export class TasksInfo {
   private route = inject(ActivatedRoute);
   private tasks = inject(TaskService);
 
-  taskId!: string | null;
-  task$ = this.tasks.getTask$(''); // инициализация, чтобы не было ошибки
+  taskId = this.route.snapshot.paramMap.get('id');
+  task$ = this.tasks.getTask$(this.taskId);
 
-  changeTaskStatus(newStatus: boolean) {
+  changeTaskStatus() {
     if (!this.taskId) return;
 
     this.tasks.changeTaskStatus(this.taskId);
-  }
-
-  ngOnInit() {
-    this.taskId = this.route.snapshot.paramMap.get('id');
-    this.task$ = this.tasks.getTask$(this.taskId);
   }
 }
 
