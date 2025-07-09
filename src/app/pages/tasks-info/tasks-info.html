@@ -1,8 +1,8 @@
-<div class="container">
-  <a matButton="outlined" [routerLink]="['/tasks']" class="button_back">Назад</a>
+<main class="task-info">
+  <a matButton="outlined" [routerLink]="['/tasks']" class="task-info__back-button">Назад</a>
   <section>
-    <mat-card class="mat-card" appearance="outlined">
-      <mat-card-title>{{ (task$ | async)?.title }}</mat-card-title>
+    <mat-card class="mat-card task-info__card" appearance="outlined">
+      <mat-card-title >{{ (task$ | async)?.title }}</mat-card-title>
       <dl>
         <dt>Описание</dt>
         <dd>{{ (task$ | async)?.description }}</dd>
@@ -15,4 +15,4 @@
       </p>
     </mat-card>
   </section>
-</div>
+</main>

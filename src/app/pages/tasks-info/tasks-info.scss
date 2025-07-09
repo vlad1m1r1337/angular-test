@@ -1,22 +1,24 @@
-.container {
+.task-info {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   padding: 2rem;
-}
 
-.mat-card {
-  min-width: 300px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 2rem;
-}
+  &__card {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
 
-.button_back {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
+    max-width: 300px;
+    word-wrap: break-word;
+    white-space: normal;
+  }
+
+  &__back-button {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+  }
 }

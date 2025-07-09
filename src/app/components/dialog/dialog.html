@@ -1,5 +1,5 @@
 <form #taskForm="ngForm" (ngSubmit)="onSubmit(taskForm)">
-  <mat-dialog-content class="container">
+  <mat-dialog-content class="dialog-container">
     <mat-form-field appearance="fill">
       <mat-label>Задача</mat-label>
       <input matInput name="title" [(ngModel)]="task.title" required />
