@@ -42,10 +42,4 @@ export class  Tasks {
   openDialog(): void {
     this.dialog.open(Dialog);
   };
-
-  ngOnInit() {
-    this.tasks$.subscribe(tasks => {
-      console.log('Все задачи:', tasks);
-    });
-  }
 }

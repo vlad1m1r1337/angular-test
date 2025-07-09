@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {MatButton} from '@angular/material/button';
 import {ActivatedRoute, RouterLink} from '@angular/router';
 import {TaskService} from '../../services/task.service';
-import {MatCard, MatCardActions, MatCardTitle} from '@angular/material/card';
+import {MatCard, MatCardTitle} from '@angular/material/card';
 import {AsyncPipe, CommonModule} from '@angular/common';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
